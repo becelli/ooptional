@@ -50,10 +50,10 @@ export abstract class Option<T extends NonNullable<unknown>> {
    * Creates an Option from a value. If the value is null or undefined, a None will be returned.
    * @param value The value to create an Option from
    * @example
-   * const option = Option.ofNullableNullable("foo");
+   * const option = Option.ofNullable("foo");
    * console.log(option.isSome());
    * @example
-   * const option = Option.ofNullableNullable(null);
+   * const option = Option.ofNullable(null);
    * console.log(option.isNone());
    */
   public static ofNullable<T>(value: T | undefined | null): Optional<NonNullable<T>> {
@@ -68,15 +68,15 @@ export abstract class Option<T extends NonNullable<unknown>> {
    * Creates an Option from a value. If the returned value is null, undefined or the function throws, a None will be returned.
    * @param value The value to create an Option from
    * @example
-   * const option = Option.ofNullableNullable("foo");
+   * const option = Option.ofNullable("foo");
    * console.log(option.isSome());
    * @example
-   * const option = Option.ofNullableNullable(null);
+   * const option = Option.ofNullable(null);
    * console.log(option.isNone());
    */
   public static ofThrowable<T>(throwable: () => T): Optional<T> {
     try {
-      return Option.ofNullableNullable(throwable());
+      return Option.ofNullable(throwable());
     } catch {
       return Option.none();
     }
@@ -86,15 +86,15 @@ export abstract class Option<T extends NonNullable<unknown>> {
    * Creates an Option from a value. If the return value is null, undefined or the promise rejects, a None will be returned.
    * @param value The value to create an Option from
    * @example
-   * const option = Option.ofNullableNullable(async () => "foo");
+   * const option = Option.ofNullable(async () => "foo");
    * console.log(option.get());
    * @example
-   * const option = Option.ofNullableNullable(async () => null);
+   * const option = Option.ofNullable(async () => null);
    * console.log(option.isNone());
    */
   public static async ofThrowableAsync<T>(throwable: () => Promise<T>): Promise<Optional<T>> {
     try {
-      return Option.ofNullableNullable(await throwable());
+      return Option.ofNullable(await throwable());
     } catch {
       return Option.none();
     }
@@ -316,14 +316,14 @@ class Some<T extends NonNullable<unknown>> extends Option<T> {
 
   public map<U>(f: (value: T) => U): Optional<NonNullable<U>> {
     try {
-      return Option.ofNullableNullable(f(this.get()));
+      return Option.ofNullable(f(this.get()));
     } catch {
       return Option.none();
     }
   }
   public async mapAsync<U>(f: (value: T) => Promise<U>): Promise<Optional<U>> {
     try {
-      return Option.ofNullableNullable(await f(this.get()));
+      return Option.ofNullable(await f(this.get()));
     } catch {
       return Option.none();
     }
@@ -366,7 +366,7 @@ class Some<T extends NonNullable<unknown>> extends Option<T> {
         return Option.none();
       }
 
-      return Option.ofNullableNullable(value.get()!);
+      return Option.ofNullable(value.get()!);
     } catch {
       return Option.none();
     }
