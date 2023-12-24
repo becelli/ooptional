@@ -1,5 +1,4 @@
-# OOptional - Optional type for your OOP needs
-
+2
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 OOptional is a TypeScript library that provides an optional type that fits nicely with Object Oriented Programming. It provides a way to handle optional values without resorting to null or undefined.
@@ -23,26 +22,26 @@ import { Optional, Option } from "ooptional";
 ### Creating an Optional
 
 ```ts
-const optional: Optional<string> = Optional.ofNullable("Hello, world!");
+const optional: Optional<string> = Option.ofNullable("Hello, world!");
 
 // or
-const some: Some<string> = Optional.some("Hello, world!");
-const someAsOptional: Optional<string> = Optional.some("Hello, world!");
+const some: Some<string> = Option.some("Hello, world!");
+const someAsOptional: Optional<string> = Option.some("Hello, world!");
 
 // or
 
-const none: None<string> = Optional.none();
-const noneAsOptional: Optional<string> = Optional.none();
+const none: None<string> = Option.none();
+const noneAsOptional: Optional<string> = Option.none();
 ```
 
 ### Checking if an Optional has a value
 
 ```ts
-const optional: Optional<string> = Optional.ofNullable("Hello, world!");
+const optional: Optional<string> = Option.ofNullable("Hello, world!");
 
 if (optional.isSome()) {
   console.log(
-    `$It automatically inferred the type as Some<string> and can access the value using the get() method: ${optional.get()}`
+    `It automatically inferred the type as Some<string> and can access the value using the get() method: ${optional.get()}`
   );
 } else {
   console.log("It is None");

@@ -14,5 +14,23 @@
     "@types/jest": "^29.5.11",
     "jest": "^29.7.0",
     "ts-jest": "^29.1.1"
-  }
+  },
+  "main": "dist/index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/becelli/ooptional.git"
+  },
+  "keywords": [
+    "oop",
+    "optional",
+    "functional",
+    "typescript"
+  ],
+  "bugs": {
+    "url": "https://github.com/becelli/ooptional/issues"
+  },
+  "homepage": "https://github.com/becelli/ooptional#readme"
 }

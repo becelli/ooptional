@@ -6,7 +6,8 @@
     "strictNullChecks": true,
     "declaration": true,
     "outDir": "./dist",
-    "moduleResolution": "Node"
+    "moduleResolution": "Node",
+    "removeComments": true,
   },
   "include": ["**/*.ts"]
 }
