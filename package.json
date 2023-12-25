@@ -2,7 +2,7 @@
   "name": "ooptional",
   "description": "A optional type that fits nicely with Object Oriented Programming",
   "author": "becelli",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "scripts": {
     "test": "jest --maxWorkers=50% --watchAll --coverage",
     "build": "tsc",
