@@ -2,7 +2,7 @@ import { Option } from "../index";
 
 describe("Option.toUndefined", () => {
   it("should return the value if option isSome", () => {
-    const option = Option.ofNullable("foo");
+    const option = Option.of("foo");
     expect(option.toUndefined()).toEqual("foo");
   });
 
@@ -12,12 +12,12 @@ describe("Option.toUndefined", () => {
   });
 
   it("should return undefined if option isNull", () => {
-    const option = Option.ofNullable<string>(null);
+    const option = Option.of<string>(null);
     expect(option.toUndefined()).toBeUndefined();
   });
 
   it("should return undefined if option isUndefined", () => {
-    const option = Option.ofNullable<string>(undefined);
+    const option = Option.of<string>(undefined);
     expect(option.toUndefined()).toBeUndefined();
   });
 });

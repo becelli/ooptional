@@ -24,15 +24,13 @@ export abstract class Option<T extends NonNullable<unknown>> {
   /**
    * Creates a Some for a non null or undefined value.
    * @param value The value to create an Option from. Must not be null or undefined
-   * @throws If value is null or undefined
    * @example
    * const option = Option.ofNullable("foo");
    * console.log(option.get());
    */
-  public static some<T>(value: NonNullable<T>): Some<NonNullable<T>> {
-    if (value === undefined || value === null) {
-      throw new Error("Value must not be null or undefined");
-    }
+
+  public static some<U extends NonNullable<unknown>>(value: U): Some<U>;
+  public static some<T>(value: NonNullable<T>): Optional<NonNullable<T>> {
     return new Some(value);
   }
 
@@ -56,7 +54,7 @@ export abstract class Option<T extends NonNullable<unknown>> {
    * const option = Option.ofNullable(null);
    * console.log(option.isNone());
    */
-  public static ofNullable<T>(value: T | undefined | null): Optional<NonNullable<T>> {
+  public static of<T>(value: T | undefined | null): Optional<NonNullable<T>> {
     if (value === undefined || value === null) {
       return Option.none();
     }
@@ -76,7 +74,7 @@ export abstract class Option<T extends NonNullable<unknown>> {
    */
   public static ofThrowable<T>(throwable: () => T): Optional<T> {
     try {
-      return Option.ofNullable(throwable());
+      return Option.of(throwable());
     } catch {
       return Option.none();
     }
@@ -94,7 +92,7 @@ export abstract class Option<T extends NonNullable<unknown>> {
    */
   public static async ofThrowableAsync<T>(throwable: () => Promise<T>): Promise<Optional<T>> {
     try {
-      return Option.ofNullable(await throwable());
+      return Option.of(await throwable());
     } catch {
       return Option.none();
     }
@@ -139,7 +137,7 @@ export abstract class Option<T extends NonNullable<unknown>> {
 
   /**
    * Gets the value of the Option. If the value is None, the defaultValue will be returned.
-   * @param defaultValue The value to return if the value is None
+   * @param other lazy value to return if the value is None
    * @example
    * const option = Option.ofNullable("foo");
    * console.log(option.getOrElse("bar"));
@@ -147,11 +145,11 @@ export abstract class Option<T extends NonNullable<unknown>> {
    * const option = Option.none();
    * console.log(option.getOrElse("bar"));
    */
-  public abstract getOrElse(defaultValue: T): NonNullable<T>;
+  public abstract getOrElse(other: () => T): T;
 
   /**
    * Gets the option if it is Some. If the value is None, the other option will be returned.
-   * @param value The option to return if the value is None
+   * @param value The lazy option to return if the value is None
    * @example
    * const option = Option.ofNullable("foo");
    * console.log(option.orElse(Option.ofNullable("bar")));
@@ -159,10 +157,10 @@ export abstract class Option<T extends NonNullable<unknown>> {
    * const option = Option.none();
    * console.log(option.orElse(Option.ofNullable("bar")));
    */
-  public abstract orElse(value: Optional<T>): Optional<T>;
+  public abstract orElse(value: () => Optional<T>): Optional<T>;
 
   /**
-   * Maps the value of the Option to a new value. If the value is None, a None will be returned. If the function throws, a None will be returned.
+   * Maps the value of the Option to a new value. If the value is None, a None will be returned.
    * @param f The function to map the value to
    * @example
    * const option = Option.ofNullable("foo");
@@ -216,7 +214,7 @@ export abstract class Option<T extends NonNullable<unknown>> {
   public abstract filterAsync(predicate: (value: T) => Promise<boolean>): Promise<Optional<T>>;
 
   /**
-   * Flat maps the value of the Option. If the value is None, a None will be returned. If the function throws, a None will be returned.
+   * Flat maps the value of the Option. If the value is None, a None will be returned.
    * @param f The function to map the value to
    * @example
    * const option = Option.ofNullable("foo");
@@ -241,16 +239,16 @@ export abstract class Option<T extends NonNullable<unknown>> {
 
   /**
    *
-   * @param some Function to execute if option isSome. If this function throws, the result of none will be returned
-   * @param none Function to execute if option isNone. If this function throws, the error WILL NOT be caught
+   * @param some Function to execute if option isSome.
+   * @param none Function to execute if option isNone.
    * @returns The result of some if option isSome, otherwise the result of none
    */
   public abstract match<U>(some: (value: T) => U, none: () => U): U;
 
   /**
    *
-   * @param some Function to execute if option isSome. If this function throws, the result of none will be returned
-   * @param none Function to execute if option isNone. If this function throws, the error WILL NOT be caught
+   * @param some Function to execute if option isSome.
+   * @param none Function to execute if option isNone.
    * @returns The result of some if option isSome, otherwise the result of none
    */
   public abstract matchAsync<U>(some: (value: T) => Promise<U>, none: () => Promise<U>): Promise<U>;
@@ -307,99 +305,80 @@ class Some<T extends NonNullable<unknown>> extends Option<T> {
     return this.get();
   }
 
-  public getOrElse(defaultValue: T): T {
+  public getOrElse(other: () => T): T {
     return this.get();
   }
-  public orElse(value: Optional<T>): Some<T> {
+  public orElse(value: () => Optional<T>): Optional<T> {
     return this;
   }
 
-  public map<U>(f: (value: T) => U): Optional<NonNullable<U>> {
-    try {
-      return Option.ofNullable(f(this.get()));
-    } catch {
+  // public map<U>(f: (value: T) => U): Optional<NonNullable<U>> {
+  //   return Option.of(f(this.get()));
+  // }
+
+  // public map<U>(f: (value: T) => NonNullable<U>): Some<NonNullable<U>> {
+  //   return Option.some(f(this.get()));
+  // }
+  public map<U>(f: (value: T) => NonNullable<U>): Some<NonNullable<U>>;
+  public map<U>(f: (value: T) => U): Optional<NonNullable<U>>;
+  public map<U>(f: (value: T) => NonNullable<U> | U): Optional<NonNullable<U>> {
+    const value = f(this.get());
+    if (value === undefined || value === null) {
       return Option.none();
     }
+
+    return Option.some(value);
   }
-  public async mapAsync<U>(f: (value: T) => Promise<U>): Promise<Optional<U>> {
-    try {
-      return Option.ofNullable(await f(this.get()));
-    } catch {
+
+  public async mapAsync<U>(f: (value: T) => Promise<NonNullable<U>>): Promise<Some<NonNullable<U>>>;
+  public async mapAsync<U>(f: (value: T) => Promise<U>): Promise<Optional<NonNullable<U>>>;
+  public async mapAsync<U>(f: (value: T) => NonNullable<U> | U): Promise<Optional<NonNullable<U>>> {
+    const value = await f(this.get());
+    if (value === undefined || value === null) {
       return Option.none();
     }
+
+    return Option.some(value);
   }
 
   public filter(predicate: (value: T) => boolean): Optional<T> {
-    try {
-      if (predicate(this.get())) {
-        return this;
-      }
-    } catch {}
+    if (predicate(this.get())) {
+      return this;
+    }
+
     return Option.none();
   }
 
   public async filterAsync(predicate: (value: T) => Promise<boolean>): Promise<Optional<T>> {
-    try {
-      if (await predicate(this.get())) {
-        return this;
-      }
-    } catch {}
+    if (await predicate(this.get())) {
+      return this;
+    }
+
     return Option.none();
   }
 
-  public equals(other: Optional<T>, comparator?: (a: T, b: T) => boolean): boolean {
+  public equals(other: Optional<T>, comparator: (a: T, b: T) => boolean = (a, b) => a === b): boolean {
     if (other.isNone()) {
       return false;
     }
 
-    if (comparator) {
-      return comparator(this.get(), other.get());
-    }
-
-    return this.get() === other.get();
+    return comparator(this.get(), other.get());
   }
 
   public flatMap<U>(f: (value: T) => Optional<U>): Optional<U> {
-    try {
-      const value = f(this.get());
-      if (value.isNone()) {
-        return Option.none();
-      }
-
-      return Option.ofNullable(value.get()!);
-    } catch {
-      return Option.none();
-    }
+    return f(this.get());
   }
 
   public async flatMapAsync<U>(f: (value: T) => Promise<Optional<U>>): Promise<Optional<U>> {
-    try {
-      return await f(this.get());
-    } catch {
-      return Option.none();
-    }
+    return await f(this.get());
   }
 
-  /**
-   *
-   * @param some Function to execute if option isSome. If this function throws, the result of none will be returned
-   * @param none Function to execute if option isNone. If this function throws, the error WILL NOT be caught
-   * @returns The result of some if option isSome, otherwise the result of none
-   */
   public match<U>(some: (value: T) => U, none: () => U): U {
-    try {
-      return some(this.get());
-    } catch {
-      return none();
-    }
+    return some(this.get());
   }
 
   public async matchAsync<U>(some: (value: T) => Promise<U>, none: () => Promise<U>): Promise<U> {
-    try {
-      return await some(this.get());
-    } catch {
-      return await none();
-    }
+    return await some(this.get());
   }
 
   public toNullable(): T {
@@ -428,12 +407,12 @@ class None<T extends NonNullable<unknown>> extends Option<T> {
     throw error;
   }
 
-  public getOrElse(defaultValue: T): T {
-    return defaultValue;
+  public getOrElse(other: () => T): T {
+    return other();
   }
 
-  public orElse(value: Optional<T>): Optional<T> {
-    return value;
+  public orElse(value: () => Optional<T>): Optional<T> {
+    return value();
   }
 
   public map<U>(f: (value: T) => U): None<NonNullable<U>> {

@@ -3,7 +3,7 @@ import { Option } from "../index";
 describe("Option.ofThrowableAsync", () => {
   it("should return Some if function does not throw", async () => {
     const option = await Option.ofThrowableAsync(async () => "foo");
-    expect(option).toEqual(Option.ofNullable("foo"));
+    expect(option).toEqual(Option.of("foo"));
   });
 
   it("should return None if function throws", async () => {

@@ -2,7 +2,7 @@ import { Option } from "../index";
 
 describe("Option.unwrap", () => {
   it("should return the value if option isSome", () => {
-    const option = Option.ofNullable("foo");
+    const option = Option.of("foo");
     expect(option.unwrap()).toBe("foo");
   });
 
@@ -12,12 +12,12 @@ describe("Option.unwrap", () => {
   });
 
   it("should throw an error if option isNull", () => {
-    const option = Option.ofNullable(null);
+    const option = Option.of(null);
     expect(() => option.unwrap()).toThrow();
   });
 
   it("should throw an error if option isUndefined", () => {
-    const option = Option.ofNullable(undefined);
+    const option = Option.of(undefined);
     expect(() => option.unwrap()).toThrow();
   });
 

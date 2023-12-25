@@ -3,7 +3,7 @@ import { Option } from "../index";
 describe("Option.ofThrowable", () => {
   it("should return Some if function does not throw", () => {
     const option = Option.ofThrowable(() => "foo");
-    expect(option).toEqual(Option.ofNullable("foo"));
+    expect(option).toEqual(Option.of("foo"));
   });
 
   it("should return None if function throws", () => {
