@@ -244,7 +244,7 @@ export abstract class Option<T extends NonNullable<unknown>> {
   /**
    * Reduces the value of the Option to a single value. If the value is None, the initialValue will be returned.
    * @param initialValue The initial value to reduce the value with
-   * @param f The function to reduce the value with
+   * @param reducer The function to reduce the value with
    * @example
    * const option = Option.of("foo");
    * console.log(option.reduce((acc, value) => acc + value, ""));
@@ -252,7 +252,7 @@ export abstract class Option<T extends NonNullable<unknown>> {
    * const option = Option.none();
    * console.log(option.reduce((acc, value) => acc + value, ""));
    */
-  public abstract reduce<U>(initialValue: U, f: (acc: U, value: T) => U): U;
+  public abstract reduce<U>(initialValue: U, reducer: (acc: U, value: T) => U): U;
 
   /**
    * Reduces the value of the Option to a single value. If the value is None, the initialValue will be returned. If the promise rejects, the initialValue will be returned.
@@ -336,7 +336,7 @@ export abstract class Option<T extends NonNullable<unknown>> {
   public abstract flatMap<U extends Optional<unknown>>(f: (value: T) => U): U;
 
   /**
-   * Flat maps the value of the Option. If the value is None, a None will be returned. If the pgetOrElseValue("bar"));romise rejects, a None will be returned.
+   * Flat maps the value of the Option. If the value is None, a None will be returned.
    * @param f The function to map the value to
    * @example
    * const option = Option.of("foo");
@@ -476,12 +476,12 @@ class Some<T extends NonNullable<unknown>> extends Option<T> {
     return Option.none();
   }
 
-  public reduce<U>(initialValue: U, f: (acc: U, value: T) => U): U {
-    return f(initialValue, this.get());
+  public reduce<U>(initialValue: U, reducer: (acc: U, value: T) => U): U {
+    return reducer(initialValue, this.get());
   }
 
-  public async reduceAsync<U>(initialValue: U, f: (acc: U, value: T) => Promise<U>): Promise<U> {
-    return await f(initialValue, this.get());
+  public async reduceAsync<U>(initialValue: U, reducer: (acc: U, value: T) => Promise<U>): Promise<U> {
+    return await reducer(initialValue, this.get());
   }
 
   public equals(other: Optional<T>, comparator: (a: T, b: T) => boolean = (a, b) => a === b): boolean {
@@ -593,11 +593,11 @@ class None<T extends NonNullable<unknown>> extends Option<T> {
     return this as unknown as None<T>;
   }
 
-  public reduce<U>(initialValue: U, f: (acc: U, value: T) => U): U {
+  public reduce<U>(initialValue: U, reducer: (acc: U, value: T) => U): U {
     return initialValue;
   }
 
-  public async reduceAsync<U>(initialValue: U, f: (acc: U, value: T) => Promise<U>): Promise<U> {
+  public async reduceAsync<U>(initialValue: U, reducer: (acc: U, value: T) => Promise<U>): Promise<U> {
     return initialValue;
   }
 
