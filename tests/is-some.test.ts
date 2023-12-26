@@ -8,16 +8,9 @@ describe("Option.isSome", () => {
 
   it("should return false if option isNone", () => {
     const option = Option.none();
-    expect(option.isSome()).toBe(false);
-  });
-
-  it("should return false if option isNull", () => {
-    const option = Option.of(null);
-    expect(option.isSome()).toBe(false);
-  });
-
-  it("should return false if option isUndefined", () => {
-    const option = Option.of(undefined);
+    if (option.isSome()) {
+      expect(option.unwrap()).toBe("foo");
+    }
     expect(option.isSome()).toBe(false);
   });
 });

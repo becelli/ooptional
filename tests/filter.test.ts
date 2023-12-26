@@ -22,7 +22,7 @@ describe("Option.filter", () => {
   });
 
   it("should return None if option is undefined", () => {
-    const option = Option.of<string>(undefined);
+    const option = Option.of<string>(undefined as string | undefined);
     expect(option.filter((value) => value === "foo")).toBe(option);
   });
 });

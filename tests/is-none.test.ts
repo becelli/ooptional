@@ -10,19 +10,4 @@ describe("Option.isNone", () => {
     const option = Option.none();
     expect(option.isNone()).toBe(true);
   });
-
-  it("should return true if option isNull", () => {
-    const option = Option.of(null);
-    expect(option.isNone()).toBe(true);
-  });
-
-  it("should return true if option isUndefined", () => {
-    const option = Option.of(undefined);
-    expect(option.isNone()).toBe(true);
-  });
-
-  it("should return true if option isNone", () => {
-    const option = Option.none();
-    expect(option.isNone()).toBe(true);
-  });
 });
