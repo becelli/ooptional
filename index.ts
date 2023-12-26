@@ -349,6 +349,7 @@ export abstract class Option<T extends NonNullable<unknown>> {
 
   /**
    *
+   * @deprecated since 2.1.0. Use `fold` instead
    * @param ifSome Function to execute if option isSome.
    * @param ifNone Function to execute if option isNone.
    * @returns The result of some if option isSome, otherwise the result of none
@@ -356,7 +357,7 @@ export abstract class Option<T extends NonNullable<unknown>> {
   public abstract match<U>(ifSome: (value: T) => U, ifNone: () => U): U;
 
   /**
-   *
+   * @deprecated since 2.1.0. Use `foldAsync` instead
    * @param ifSome Function to execute if option isSome.
    * @param ifNone Function to execute if option isNone.
    * @returns The result of some if option isSome, otherwise the result of none
@@ -519,12 +520,26 @@ class Some<T extends NonNullable<unknown>> extends Option<T> {
     return await mapper(this.get());
   }
 
+  /**
+   *
+   * @deprecated since 2.1.0. Use `fold` instead
+   * @param ifSome Function to execute if option isSome.
+   * @param ifNone Function to execute if option isNone.
+   * @returns The result of some if option isSome, otherwise the result of none
+   */
   public match<U>(ifSome: (value: T) => U, ifNone: () => U): U {
-    return ifSome(this.get());
+    return this.fold(ifSome, ifNone);
   }
 
+  /**
+   *
+   * @deprecated since 2.1.0. Use `foldAsync` instead
+   * @param ifSome Function to execute if option isSome.
+   * @param ifNone Function to execute if option isNone.
+   * @returns The result of some if option isSome, otherwise the result of none
+   */
   public async matchAsync<U>(ifSome: (value: T) => Promise<U>, ifNone: () => Promise<U>): Promise<U> {
-    return await ifSome(this.get());
+    return this.foldAsync(ifSome, ifNone);
   }
 
   public toNullable(): T {
@@ -625,12 +640,26 @@ class None<T extends NonNullable<unknown>> extends Option<T> {
     return this as unknown as U;
   }
 
+  /**
+   *
+   * @deprecated since 2.1.0. Use `fold` instead
+   * @param ifSome Function to execute if option isSome.
+   * @param ifNone Function to execute if option isNone.
+   * @returns The result of some if option isSome, otherwise the result of none
+   */
   public match<U>(ifSome: (value: T) => U, ifNone: () => U): U {
-    return ifNone();
+    return this.fold(ifSome, ifNone);
   }
 
+  /**
+   *
+   * @deprecated since 2.1.0. Use `foldAsync` instead
+   * @param ifSome Function to execute if option isSome.
+   * @param ifNone Function to execute if option isNone.
+   * @returns The result of some if option isSome, otherwise the result of none
+   */
   public async matchAsync<U>(ifSome: (value: T) => Promise<U>, ifNone: () => Promise<U>): Promise<U> {
-    return await ifNone();
+    return this.foldAsync(ifSome, ifNone);
   }
 
   public toNullable(): null {
