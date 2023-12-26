@@ -2,7 +2,7 @@
   "name": "ooptional",
   "description": "A optional type that fits nicely with Object Oriented Programming",
   "author": "becelli",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "scripts": {
     "test": "jest --maxWorkers=50% --watchAll --coverage",
     "build": "tsc",
@@ -25,9 +25,11 @@
   },
   "keywords": [
     "oop",
+    "object",
     "optional",
     "functional",
-    "typescript"
+    "typescript",
+    "safe"
   ],
   "bugs": {
     "url": "https://github.com/becelli/ooptional/issues"
