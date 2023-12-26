@@ -22,10 +22,7 @@ describe("Option.equalsAsync", () => {
   });
 
   it("should use the provided equality function", async () => {
-    const value = await Option.some({ foo: "bar" }).equalsAsync(
-      Option.some({ foo: "bar" }),
-      async (a, b) => a.foo === b.foo
-    );
+    await Option.some({ foo: "bar" }).equalsAsync(Option.some({ foo: "bar" }), async (a, b) => a.foo === b.foo);
   });
 
   it("should use the default equality function if none is provided", async () => {

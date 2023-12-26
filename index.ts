@@ -421,23 +421,23 @@ class Some<T extends NonNullable<unknown>> extends Option<T> {
     return true;
   }
 
-  public unwrap(error?: string | Error): T {
+  public unwrap(_error?: string | Error): T {
     return this.get();
   }
 
-  public getOrElse(other: () => T): T {
+  public getOrElse(_other: () => T): T {
     return this.get();
   }
 
-  public async getOrElseAsync(other: () => Promise<T>): Promise<T> {
+  public async getOrElseAsync(_other: () => Promise<T>): Promise<T> {
     return this.get();
   }
 
-  public orElse(other: () => Optional<T>): Optional<T> {
+  public orElse(_other: () => Optional<T>): Optional<T> {
     return this;
   }
 
-  public async orElseAsync(other: () => Promise<Optional<T>>): Promise<Optional<T>> {
+  public async orElseAsync(_other: () => Promise<Optional<T>>): Promise<Optional<T>> {
     return this;
   }
 
@@ -493,11 +493,11 @@ class Some<T extends NonNullable<unknown>> extends Option<T> {
     return comparator(this.get(), other.get());
   }
 
-  public fold<U>(ifSome: (value: T) => U, ifNone: () => U): U {
+  public fold<U>(ifSome: (value: T) => U, _ifNone: () => U): U {
     return ifSome(this.get());
   }
 
-  public async foldAsync<U>(ifSome: (value: T) => Promise<U>, ifNone: () => Promise<U>): Promise<U> {
+  public async foldAsync<U>(ifSome: (value: T) => Promise<U>, _ifNone: () => Promise<U>): Promise<U> {
     return await ifSome(this.get());
   }
 
@@ -584,59 +584,59 @@ class None<T extends NonNullable<unknown>> extends Option<T> {
     return await other();
   }
 
-  public satisfies(predicate: (value: T) => boolean): boolean {
+  public satisfies(_predicate: (value: T) => boolean): boolean {
     return false;
   }
 
-  public async satisfiesAsync(predicate: (value: T) => Promise<boolean>): Promise<boolean> {
+  public async satisfiesAsync(_predicate: (value: T) => Promise<boolean>): Promise<boolean> {
     return false;
   }
 
-  public map<U>(mapper: (value: T) => U): None<NonNullable<U>> {
+  public map<U>(_mapper: (value: T) => U): None<NonNullable<U>> {
     return this as unknown as None<NonNullable<U>>;
   }
 
-  public async mapAsync<U>(mapper: (value: T) => Promise<U>): Promise<None<NonNullable<U>>> {
+  public async mapAsync<U>(_mapper: (value: T) => Promise<U>): Promise<None<NonNullable<U>>> {
     return this as unknown as None<NonNullable<U>>;
   }
 
-  public filter(predicate: (value: T) => boolean): None<T> {
+  public filter(_predicate: (value: T) => boolean): None<T> {
     return this as unknown as None<T>;
   }
 
-  public async filterAsync(predicate: (value: T) => Promise<boolean>): Promise<None<T>> {
+  public async filterAsync(_predicate: (value: T) => Promise<boolean>): Promise<None<T>> {
     return this as unknown as None<T>;
   }
 
-  public reduce<U>(initialValue: U, reducer: (acc: U, value: T) => U): U {
+  public reduce<U>(initialValue: U, _reducer: (acc: U, value: T) => U): U {
     return initialValue;
   }
 
-  public async reduceAsync<U>(initialValue: U, reducer: (acc: U, value: T) => Promise<U>): Promise<U> {
+  public async reduceAsync<U>(initialValue: U, _reducer: (acc: U, value: T) => Promise<U>): Promise<U> {
     return initialValue;
   }
 
-  public fold<U>(ifSome: (value: T) => U, ifNone: () => U): U {
+  public fold<U>(_ifSome: (value: T) => U, ifNone: () => U): U {
     return ifNone();
   }
 
-  public async foldAsync<U>(ifSome: (value: T) => Promise<U>, ifNone: () => Promise<U>): Promise<U> {
+  public async foldAsync<U>(_ifSome: (value: T) => Promise<U>, ifNone: () => Promise<U>): Promise<U> {
     return await ifNone();
   }
 
-  public equals(other: Optional<T>, comparator?: (a: T, b: T) => boolean): boolean {
+  public equals(other: Optional<T>, _comparator?: (a: T, b: T) => boolean): boolean {
     return other.isNone();
   }
 
-  public async equalsAsync(other: Optional<T>, comparator?: (a: T, b: T) => Promise<boolean>): Promise<boolean> {
+  public async equalsAsync(other: Optional<T>, _comparator?: (a: T, b: T) => Promise<boolean>): Promise<boolean> {
     return other.isNone();
   }
 
-  public flatMap<U extends Optional<unknown>>(mapper: (value: T) => U): U {
+  public flatMap<U extends Optional<unknown>>(_mapper: (value: T) => U): U {
     return this as unknown as U;
   }
 
-  public async flatMapAsync<U extends Optional<unknown>>(mapper: (value: T) => Promise<U>): Promise<U> {
+  public async flatMapAsync<U extends Optional<unknown>>(_mapper: (value: T) => Promise<U>): Promise<U> {
     return this as unknown as U;
   }
 
