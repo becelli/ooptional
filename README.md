@@ -18,10 +18,44 @@ npm install ooptional
 import { Optional, Option } from "ooptional";
 ```
 
+## Practical example: validating a user
+
+```ts
+import { Optional, Option } from "ooptional";
+
+export class UserService {
+  // no optional type 😥
+  public verifyCanCreateAccount(user: User): boolean {
+    if (user.age < 18) {
+      return false;
+    }
+
+    if (!user.email) {
+      return false;
+    }
+
+    if (!user.password) {
+      return false;
+    }
+
+    return true;
+  }
+
+  // with optional type 😋
+  public verifyCanCreateAccount(user: User): boolean {
+    return Option.of(user)
+      .filter((user) => user.age >= 18)
+      .filter((user) => user.email)
+      .filter((user) => user.password)
+      .isSome();
+  }
+}
+```
+
 ### Creating an Optional
 
 ```ts
-const optional: Optional<string> = Option.ofNullable("Hello, world!");
+const optional: Optional<string> = Option.of("Hello, world!");
 
 // or
 const some: Some<string> = Option.some("Hello, world!");
@@ -35,7 +69,7 @@ const noneAsOptional: Optional<string> = Option.none();
 ### Checking if an Optional has a value
 
 ```ts
-const optional: Optional<string> = Option.ofNullable("Hello, world!");
+const optional: Optional<string> = Option.of("Hello, world!");
 
 if (optional.isSome()) {
   console.log(
@@ -73,7 +107,6 @@ The `Option` class has the following methods:
 - `matchAsync<U>(ifNone: () => Promise<U>, ifSome: (value: T) => Promise<U>): Promise<U>`: Applies an asynchronous function to the contained value depending on whether it is `Some` or `None`.
 - `toNullable(): T | null`: Returns the value if it exists, otherwise returns null.
 - `toUndefined(): T | undefined`: Returns the value if it exists, otherwise returns undefined.
-
 
 ### Some class
 
