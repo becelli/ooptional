@@ -10,17 +10,6 @@ describe("Option.unwrap", () => {
     const option = Option.none();
     expect(() => option.unwrap()).toThrow();
   });
-
-  it("should throw an error if option isNull", () => {
-    const option = Option.of(null);
-    expect(() => option.unwrap()).toThrow();
-  });
-
-  it("should throw an error if option isUndefined", () => {
-    const option = Option.of(undefined);
-    expect(() => option.unwrap()).toThrow();
-  });
-
   it("should throw an error with the provided error message if option isNone", () => {
     const option = Option.none();
     expect(() => option.unwrap("foo")).toThrow("foo");

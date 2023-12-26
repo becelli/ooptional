@@ -2,7 +2,7 @@ import { Option } from "../index";
 
 describe("Option.matchAsync", () => {
   it("should return the result of the function if option isSome", async () => {
-    const option = Option.of("foo");
+    const option = Option.some("foo");
     expect(
       await option.matchAsync(
         async (value) => value.toUpperCase(),

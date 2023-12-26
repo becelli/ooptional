@@ -3,6 +3,7 @@ import { Option } from "../index";
 describe("Option.flatMap", () => {
   it("should return the result of the function", () => {
     const option = Option.of("foo");
+    const result = option.flatMap((value) => Option.of(value + "bar"));
     expect(option.flatMap((value) => Option.of(value + "bar"))).toEqual(Option.of("foobar"));
   });
 

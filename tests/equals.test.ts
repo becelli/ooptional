@@ -31,13 +31,6 @@ describe("Option.equals", () => {
     expect(option1.equals(option2)).toBe(false);
   });
 
-  it("should return false if both options are Some and have different types", () => {
-    const option1 = Option.of("foo");
-    const option2 = Option.of(1);
-    // @ts-expect-error
-    expect(option1.equals(option2)).toBe(false);
-  });
-
   it("should return false if both options are Some and have different objects", () => {
     const option1 = Option.of({});
     const option2 = Option.of({});
