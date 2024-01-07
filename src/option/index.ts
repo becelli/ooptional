@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 export type Optional<T> = Some<NonNullable<T>> | None<NonNullable<T>>;
 
 /**
