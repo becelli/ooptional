@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest --maxWorkers=50% --watch --coverage",
     "build:watch": "tsc --watch",
-    "build:prod": "rm -rf dist && tsc --build",
+    "prebuild:prod": "rm -rf dist",
+    "build:prod": "tsc --build",
     "lint": "eslint . --ext .ts"
   },
   "license": "MIT",

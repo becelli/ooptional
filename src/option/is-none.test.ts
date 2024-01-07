@@ -1,4 +1,4 @@
-import { Option } from "@/option";
+import { Option } from ".";
 
 describe("Option.isNone", () => {
   it("should return false if option isSome", () => {

@@ -1,4 +1,4 @@
-import { Option } from "@/option";
+import { Option } from ".";
 
 describe("Option.filter", () => {
   it("should return the option if predicate returns true", () => {

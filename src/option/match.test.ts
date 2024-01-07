@@ -1,4 +1,4 @@
-import { Option } from "@/option";
+import { Option } from ".";
 
 describe("Option.match", () => {
   it("should return the result of the function if option isSome", () => {

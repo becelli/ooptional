@@ -1,4 +1,4 @@
-import { Option } from "@/option";
+import { Option } from ".";
 
 describe("Option.getOrElseAsync", () => {
   it("should return the value if option isSome", async () => {

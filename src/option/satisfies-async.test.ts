@@ -1,4 +1,4 @@
-import { Option } from "@/option";
+import { Option } from ".";
 
 describe("Option.satisfiesAsync", () => {
   it("should return true if the value satisfies the predicate", async () => {

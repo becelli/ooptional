@@ -1,4 +1,4 @@
-import { Option } from "@/option";
+import { Option } from ".";
 
 describe("Option.ofThrowable", () => {
   it("should return Some if function does not throw", () => {

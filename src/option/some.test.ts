@@ -1,4 +1,4 @@
-import { Option } from "@/option";
+import { Option } from ".";
 
 describe("Option.some", () => {
   it("should return a Some when the value is not null or undefined", () => {

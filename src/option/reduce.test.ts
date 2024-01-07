@@ -1,4 +1,4 @@
-import { Option } from "@/option";
+import { Option } from ".";
 
 describe("Option.reduce", () => {
   it("should return the initial value if the Option is None", () => {

@@ -10,14 +10,13 @@
     "esModuleInterop": false,
     "removeComments": false,
     "moduleResolution": "Node",
-    "sourceMap": true,
+    "sourceMap": false,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
-    "incremental": true,
+    "incremental": false,
     "moduleDetection": "force",
-    "composite": true,
     "downlevelIteration": true,
-    "skipLibCheck": true,
+    "skipLibCheck": false,
     "allowJs": false,
     "lib": ["ES2023"],
     "declarationMap": true,
@@ -28,10 +27,7 @@
     "noImplicitThis": true,
     "noImplicitAny": true,
     "noErrorTruncation": true,
-    "baseUrl": "./",
-    "paths": {
-      "@/*": ["src/*"]
-    }
+    "baseUrl": "./"
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules", "dist", "src/**/*.spec.ts", "src/**/*.test.ts"]

@@ -1,4 +1,4 @@
-import { Option } from "@/option";
+import { Option } from ".";
 
 describe("Option.mapAsync", () => {
   it("should return the mapped value if option isSome", async () => {

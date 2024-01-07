@@ -1,4 +1,4 @@
-import { Option } from "@/option";
+import { Option } from ".";
 
 describe("Option.map", () => {
   it("should return the mapped value if option isSome", () => {

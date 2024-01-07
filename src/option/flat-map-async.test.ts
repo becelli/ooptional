@@ -1,4 +1,4 @@
-import { Option } from "@/option";
+import { Option } from ".";
 
 describe("Option.flatMapAsync", () => {
   it("should return the result of the function", async () => {

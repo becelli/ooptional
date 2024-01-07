@@ -1,4 +1,4 @@
-import { Option } from "@/option";
+import { Option } from ".";
 
 describe("Option.fold", () => {
   it("should return the result of the reducer function if the Option is Some", () => {

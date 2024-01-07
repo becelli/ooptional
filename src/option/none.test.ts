@@ -1,4 +1,4 @@
-import { Option } from "@/option";
+import { Option } from ".";
 describe("Option.none", () => {
   it("should return a None", () => {
     const value = Option.none();

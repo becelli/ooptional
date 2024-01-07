@@ -1,4 +1,4 @@
-import { Option } from "@/option";
+import { Option } from ".";
 
 describe("Option.flatMap", () => {
   it("should return the result of the function", () => {

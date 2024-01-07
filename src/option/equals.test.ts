@@ -1,4 +1,4 @@
-import { Option } from "@/option";
+import { Option } from ".";
 
 describe("Option.equals", () => {
   it("should return true if both options are None", () => {

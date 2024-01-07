@@ -1,4 +1,4 @@
-import { Option } from "@/option";
+import { Option } from ".";
 
 describe("Option.ofThrowableAsync", () => {
   it("should return Some if function does not throw", async () => {
