@@ -5,10 +5,11 @@
     "strict": true,
     "declaration": true,
     "outDir": "./dist",
+    "rootDir": "./src",
     "checkJs": false,
+    "esModuleInterop": false,
     "removeComments": false,
     "moduleResolution": "Node",
-    "esModuleInterop": true,
     "sourceMap": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
@@ -26,7 +27,12 @@
     "noUnusedLocals": true,
     "noImplicitThis": true,
     "noImplicitAny": true,
-    "noErrorTruncation": true
+    "noErrorTruncation": true,
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"]
+    }
   },
-  "include": ["index.ts"]
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "dist", "src/**/*.spec.ts", "src/**/*.test.ts"]
 }
